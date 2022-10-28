@@ -30,16 +30,12 @@ const { qualitiesRequested, qualitiesReceived, qualitiesRequestFailed } =
     actions;
 
 function isOutdated(date) {
-    if (Date.now() - date > 10 * 60 * 1000) {
-        return true;
-    }
-    return false;
+    return Date.now() - date > 10 * 60 * 1000;
 }
 
 export const loadQualitiesList = () => async (dispatch, getState) => {
     const { lastFetch } = getState().qualities;
     if (isOutdated(lastFetch)) {
-        console.log(lastFetch);
         dispatch(qualitiesRequested());
         try {
             const { content } = await qualityService.fetchAll();
